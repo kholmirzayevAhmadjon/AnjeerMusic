@@ -6,4 +6,5 @@ public class Constants
      "User Id=javohir03;Password=cIKLeyAx4NGBPfMujI252EpIkCSsySPq;";
 
     public const string token = "6991402457:AAH9iq8LHWqj9s5yt8IJSTJbye9Zs6Yr9fA";
+    public const string fileDirectory = @"..\..\..\..\..\AnjeerMusic\AnjeerMusic.Service\SaveMusic\";
 }
