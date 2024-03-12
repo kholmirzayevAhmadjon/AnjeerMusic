@@ -16,27 +16,50 @@ public class UserService : IUserService
 
     public async Task<UserViewModel> CreateAsync(UserCreationModel user)
     {
-        var users = repository.SelectAllAsQueryable();
-        var existUser = users.FirstOrDefault(u => u.ChatId == user.ChatId);
+        var existUser = repository.SelectAllAsQueryable().FirstOrDefault(u => u.ChatId == user.ChatId);
         if (existUser != null)
             return await UpdateAsync(existUser.Id, user.MapTo<UserUpdateModel>());
 
         var createUser = await repository.InsertAsync(user.MapTo<User>());
+        await repository.SaveAsync();
         return createUser.MapTo<UserViewModel>();
     }
 
-    public Task<bool> DeleteAsync(long id)
+    public async Task<bool> DeleteAsync(long id)
     {
-        throw new NotImplementedException();
+        var existUser = await repository.SelectByIdAsync(id)
+            ?? throw new Exception($"This user is not found With this id {id}");
+
+        existUser.IsDeleted = true;
+        existUser.DeletedAt = DateTime.UtcNow;
+
+        await repository.DeleteAsync(existUser);
+        await repository.SaveAsync();
+        return true;
     }
 
-    public Task<UserViewModel> GetByIdAsync(long id)
+    public async Task<UserViewModel> GetByIdAsync(long id)
     {
-        throw new NotImplementedException();
+        var existUser = await repository.SelectByIdAsync(id)
+            ?? throw new Exception($"This user is not found With this id {id}");
+
+        return existUser.MapTo<UserViewModel>();
     }
 
     public async Task<UserViewModel> UpdateAsync(long id, UserUpdateModel user)
     {
-        throw new NotImplementedException();
+        var existUser = await repository.SelectByIdAsync(id)
+            ?? throw new Exception($"This user is not found With this id {id}");
+
+        existUser.IsDeleted = false;
+        existUser.UpdatedAt = DateTime.UtcNow;
+        existUser.FirstName = user.FirstName;
+        existUser.LastName = user.LastName;
+        existUser.PhoneNumber = user.PhoneNumber;
+        existUser.ChatId = user.ChatId;
+
+        await repository.UpdateAsync(existUser);
+        await repository.SaveAsync();
+        return existUser.MapTo<UserViewModel>();
     }
 }
