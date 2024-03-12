@@ -16,4 +16,8 @@
     <ProjectReference Include="..\AnjeerMusic.Models\AnjeerMusic.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SaveMusic\" />
+  </ItemGroup>
+
 </Project>

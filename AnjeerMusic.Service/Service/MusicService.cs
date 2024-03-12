@@ -9,6 +9,10 @@ namespace AnjeerMusic.Service.Service;
 public class MusicService : IMusicService
 {
     private readonly IRepository<Music> repository;
+    public MusicService(Repository<Music> repository)
+    {
+        this.repository = repository;
+    }
     public async Task<MusicViewModel> CreateAsync(MusicCreationModel music)
     {
         var existingMusic = repository
