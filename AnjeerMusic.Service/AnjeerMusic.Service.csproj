@@ -7,9 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AnjeerMusic.Data\AnjeerMusic.Data.csproj" />
-    <ProjectReference Include="..\AnjeerMusic.Domain\AnjeerMusic.Domain.csproj" />
-    <ProjectReference Include="..\AnjeerMusic.Models\AnjeerMusic.Models.csproj" />
   </ItemGroup>
 
 </Project>
