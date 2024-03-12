@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AnjeerMusic.Data\AnjeerMusic.Data.csproj" />
+    <ProjectReference Include="..\AnjeerMusic.Service\AnjeerMusic.Service.csproj" />
+  </ItemGroup>
+
 </Project>
