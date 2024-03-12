@@ -3,15 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnjeerMusic.Data", "AnjeerMusic.Data\AnjeerMusic.Data.csproj", "{4035D0E7-D201-4AE5-BA50-03A134FBF35E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnjeerMusic.Data", "AnjeerMusic.Data\AnjeerMusic.Data.csproj", "{4035D0E7-D201-4AE5-BA50-03A134FBF35E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnjeerMusic.Domain", "AnjeerMusic.Domain\AnjeerMusic.Domain.csproj", "{2B399684-28A2-4C14-8D8A-E6B307556236}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnjeerMusic.Domain", "AnjeerMusic.Domain\AnjeerMusic.Domain.csproj", "{2B399684-28A2-4C14-8D8A-E6B307556236}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnjeerMusic.Service", "AnjeerMusic.Service\AnjeerMusic.Service.csproj", "{E4BE53A4-362E-4DCC-82B0-47F5584C81C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnjeerMusic.Service", "AnjeerMusic.Service\AnjeerMusic.Service.csproj", "{E4BE53A4-362E-4DCC-82B0-47F5584C81C0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{51B73BEE-2896-4057-887F-7184F49231FB} = {51B73BEE-2896-4057-887F-7184F49231FB}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnjeerMusic.Menu", "AnjeerMusic.Menu\AnjeerMusic.Menu.csproj", "{5F738CB7-EB7B-47DC-B225-663012954C9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnjeerMusic.Menu", "AnjeerMusic.Menu\AnjeerMusic.Menu.csproj", "{5F738CB7-EB7B-47DC-B225-663012954C9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnjeerMusic.Models", "AnjeerMusic.Models\AnjeerMusic.Models.csproj", "{51B73BEE-2896-4057-887F-7184F49231FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnjeerMusic.Models", "AnjeerMusic.Models\AnjeerMusic.Models.csproj", "{51B73BEE-2896-4057-887F-7184F49231FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
