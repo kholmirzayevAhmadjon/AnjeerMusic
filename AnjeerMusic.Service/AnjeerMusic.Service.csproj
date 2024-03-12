@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Telegram.Bot" Version="19.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AnjeerMusic.Data\AnjeerMusic.Data.csproj" />
+    <ProjectReference Include="..\AnjeerMusic.Domain\AnjeerMusic.Domain.csproj" />
+    <ProjectReference Include="..\AnjeerMusic.Models\AnjeerMusic.Models.csproj" />
   </ItemGroup>
 
 </Project>
