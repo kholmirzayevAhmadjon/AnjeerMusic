@@ -6,6 +6,7 @@ using AnjeerMusic.Models.UserModels;
 using AnjeerMusic.Domain.Configurations;
 using AnjeerMusic.Models.MusicModels;
 using AnjeerMusic.Domain.Musics;
+using AnjeerMusic.Models.UserMusicModels;
 
 namespace AnjeerMusic.Service.Service;
 
@@ -15,14 +16,16 @@ public class TgBotService
     private UserService userService;
     private MusicService musicService;
     private UserViewModel existUser;
+    private UserMusicService userMusicService;
     private  int currentPage = 1;
     private  int itemsPerPage = 3;
     private List<MusicViewModel> musicals;
-    public TgBotService(TelegramBotClient client,UserService userService,MusicService musicService)
+    public TgBotService(TelegramBotClient client,UserService userService,MusicService musicService,UserMusicService userMusicService)
     {
         this.client = client;
         this.userService = userService;
         this.musicService = musicService;
+        this.userMusicService = userMusicService;
     }
 
     public async Task Run()
@@ -56,7 +59,7 @@ public class TgBotService
                         (message.Chat.Id, "Settings ⚙️", replyMarkup: new InlineKeyboardMarkup(SettingsInlineKeyboardMarkup()));
                     break;
                 case "/mymusic":
-                    await client.SendTextMessageAsync(message.Chat.Id, "My Music menu is not implemented yet.");
+                    await MyMusicAsync(message.Chat.Id);
                     break;
                 case "/search":
                     await SearchAsync(message.Chat.Id);
@@ -81,8 +84,7 @@ public class TgBotService
                     //await client.DeleteOrCreateMusicAsync(chatId, callbackQuery.Message.MessageId);
                     break;
                 case "mymusic_data":
-                    //await client.SendTextMessageAsync(chatId, "/mymusic");
-                    update.Message.Text = "/mymusic";
+                    await MyMusicAsync(chatId);
                     break;
                 case "search_data":
                     await SearchAsync (chatId);
@@ -107,7 +109,6 @@ public class TgBotService
         }
     }
 
-   
     private async Task UserCreateAsync(Message message)
     {
         UserCreationModel user = new UserCreationModel()
@@ -216,6 +217,13 @@ public class TgBotService
             var audio = new InputFileStream(memoryStream, musicals[index].Name);
             await client.SendAudioAsync(chatId: chatId, audio: audio, replyMarkup: ConditionInlineKeyboardMarkup());
         }
+
+        UserMusicCreationModels userMusic = new()
+        {
+            UserId = existUser.Id,
+            MusicId = musicals[index].Id
+        };
+        await userMusicService.CreateAsync(userMusic);
     }
    
     private void ShowMainMenu(long chatId)
@@ -262,6 +270,20 @@ public class TgBotService
         await client.SendTextMessageAsync
                         (chatId, "Qo'shiqni topib berishim uchun, menga quyidagilardan birini yuboring\n" +
                         " Qo'shiq nomi\n Qo'shiq ijrochisi ismi");
+    }
+   
+    private async Task MyMusicAsync(long chatId)
+    {
+        //musicals = (await userMusicService.GetAllAsync(existUser.Id)).ToList();
+
+        if (!musicals.Any())
+        {
+            await client.SendTextMessageAsync(chatId, $"Hech narsa topilmadi  😔", replyMarkup: new InlineKeyboardMarkup(GeneratePaginationKeyboard()));
+        }
+        else
+        {
+            await SendPaginatedMessageAsync(chatId);
+        }
     }
 
     private InlineKeyboardMarkup ConditionInlineKeyboardMarkup()
