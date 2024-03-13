@@ -1,4 +1,5 @@
 ﻿using AnjeerMusic.Domain.Commons;
+using AnjeerMusic.Domain.UserMusics;
 
 namespace AnjeerMusic.Domain.Users;
 
@@ -11,4 +12,5 @@ public class User : Auditable
     public long ChatId { get; set; }
 
     public long PhoneNumber { get; set; }
+    public IEnumerable<UserMusic>userMusics { get; set; }
 }

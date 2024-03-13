@@ -15,4 +15,19 @@ public class AppDbContext:DbContext
     {
         optionsBuilder.UseNpgsql(Constants.ConnectionString);
     }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<UserMusic>()
+            .HasKey(um => new { um.UserId, um.MusicId });
+
+        modelBuilder.Entity<UserMusic>()
+            .HasOne(user => user.User)
+            .WithMany(m => m.userMusics)
+            .HasForeignKey(um => um.UserId);
+
+        modelBuilder.Entity<UserMusic>()
+            .HasOne(music => music.Music)
+            .WithMany()
+            .HasForeignKey(um => um.MusicId);
+    }
 }

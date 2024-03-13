@@ -103,9 +103,9 @@ public class TgBotService
                     break;
             }
         }
-        else if(message.Type == MessageType.Text)
+        else if (message.Type == MessageType.Text)
         {
-            await SearchMusicAsync(message.Chat.Id,message.Text);
+            await SearchMusicAsync(message.Chat.Id, message.Text);
         }
     }
 

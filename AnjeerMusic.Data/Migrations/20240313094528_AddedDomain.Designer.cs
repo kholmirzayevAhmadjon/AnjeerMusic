@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AnjeerMusic.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240311103838_Added6")]
-    partial class Added6
+    [Migration("20240313094528_AddedDomain")]
+    partial class AddedDomain
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,11 +58,11 @@ namespace AnjeerMusic.Data.Migrations
 
             modelBuilder.Entity("AnjeerMusic.Domain.UserMusics.UserMusic", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    b.Property<long>("MusicId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -70,23 +70,18 @@ namespace AnjeerMusic.Data.Migrations
                     b.Property<DateTime>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
-
-                    b.Property<long>("MusicId")
-                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
+                    b.HasKey("UserId", "MusicId");
 
                     b.HasIndex("MusicId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("userMusicals");
                 });
@@ -137,7 +132,7 @@ namespace AnjeerMusic.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("AnjeerMusic.Domain.Users.User", "User")
-                        .WithMany()
+                        .WithMany("userMusics")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -145,6 +140,11 @@ namespace AnjeerMusic.Data.Migrations
                     b.Navigation("Music");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AnjeerMusic.Domain.Users.User", b =>
+                {
+                    b.Navigation("userMusics");
                 });
 #pragma warning restore 612, 618
         }
