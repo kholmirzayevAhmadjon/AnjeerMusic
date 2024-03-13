@@ -1,8 +1,10 @@
 ﻿using AnjeerMusic.Data.Repositories;
 using AnjeerMusic.Domain.UserMusics;
+using AnjeerMusic.Domain.Users;
 using AnjeerMusic.Models.UserMusicModels;
 using AnjeerMusic.Service.Extensions;
 using AnjeerMusic.Service.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace AnjeerMusic.Service.Service;
 

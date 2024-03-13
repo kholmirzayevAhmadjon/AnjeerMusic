@@ -7,6 +7,9 @@ using AnjeerMusic.Domain.Configurations;
 using AnjeerMusic.Models.MusicModels;
 using AnjeerMusic.Domain.Musics;
 using AnjeerMusic.Models.UserMusicModels;
+using AnjeerMusic.Data.DbContexts;
+using AnjeerMusic.Domain.Users;
+using Microsoft.EntityFrameworkCore;
 
 namespace AnjeerMusic.Service.Service;
 
@@ -283,8 +286,14 @@ public class TgBotService
    
     private async Task MyMusicAsync(long chatId)
     {
-        //musicals = (await userMusicService.GetAllAsync(existUser.Id)).ToList();
+        var userMusic = await userMusicService.GetAllAsync(existUser.Id);
+        var musics = await musicService.GetAllAsync();
+        var userMusics = from um in userMusic
+                         join m in musics on um.MusicId equals m.Id
+                         where um.UserId == existUser.Id
+                         select m;
 
+        musicals = userMusics.ToList();
         if (!musicals.Any())
         {
             await client.SendTextMessageAsync(chatId, $"Hech narsa topilmadi  😔", replyMarkup: new InlineKeyboardMarkup(GeneratePaginationKeyboard()));
