@@ -40,9 +40,9 @@ public class TgBotService
         if (message?.Text == "/start")
         {
             await UserCreateAsync(message);
-            ShowMainMenu(message.Chat.Id);
+            await ShowMainMenu(message.Chat.Id);
         }
-        else if(message?.Chat.Id == 1653251416 && message.Type == MessageType.Audio)
+        else if(message?.Chat.Id == 1966755645 && message.Type == MessageType.Audio)
         {
            var filePath = await DownLoadMusicAsync(message);
 
@@ -225,28 +225,30 @@ public class TgBotService
         };
         await userMusicService.CreateAsync(userMusic);
     }
-   
-    private void ShowMainMenu(long chatId)
-    {
-        var keyboard = new ReplyKeyboardMarkup(new[]
-        {
-             new[]
-             {
-                new KeyboardButton("/search"),
-                new KeyboardButton("/mymusic")
-             },
-             new[]
-             {
-                new KeyboardButton("/settings")
-             }
-         });
 
-        keyboard.ResizeKeyboard = true;
+    private async Task ShowMainMenu(long chatId)
+    {
+        var MenuKeyboard = new ReplyKeyboardMarkup(new[]
+        {
+         new[]
+         {
+            new KeyboardButton("/search"),
+            new KeyboardButton("/mymusic")
+         },
+         new[]
+         {
+            new KeyboardButton("/settings")
+         }
+     });
+
+        MenuKeyboard.ResizeKeyboard = true;
+
+        await client.SendTextMessageAsync(chatId, "Main Menu:", replyMarkup: MenuKeyboard);
     }
 
     private List<List<InlineKeyboardButton>> SettingsInlineKeyboardMarkup()
     {
-        var keyboard = new List<List<InlineKeyboardButton>>
+        var SettingsKeyboard = new List<List<InlineKeyboardButton>>
     {
         new List<InlineKeyboardButton>
         {
@@ -262,7 +264,7 @@ public class TgBotService
         }
     };
 
-        return keyboard;
+        return SettingsKeyboard;
     }
 
     public async Task SearchAsync(long chatId)
