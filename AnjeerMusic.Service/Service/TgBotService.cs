@@ -78,7 +78,7 @@ public class TgBotService
             switch (callbackQuery.Data)
             {
                 case "exit_data":
-                    await client.DeleteMessageAsync(chatId, callbackQuery.Message.MessageId);
+                    await DeleteMessageAsync(chatId, callbackQuery.Message.MessageId);
                     break;
                 case "heart_data":
                     //await client.DeleteOrCreateMusicAsync(chatId, callbackQuery.Message.MessageId);
@@ -90,10 +90,12 @@ public class TgBotService
                     await SearchAsync (chatId);
                     break;
                 case "back_data":
+                    await DeleteMessageAsync(chatId, callbackQuery.Message.MessageId);
                     currentPage--;
                     await SendPaginatedMessageAsync(chatId);
                     break;
                 case "forward_data":
+                    await DeleteMessageAsync(chatId, callbackQuery.Message.MessageId);
                     currentPage++;
                     await SendPaginatedMessageAsync(chatId);
                     break;
@@ -107,6 +109,11 @@ public class TgBotService
         {
             await SearchMusicAsync(message.Chat.Id, message.Text);
         }
+    }
+
+    private async Task DeleteMessageAsync(long chatId, int messageId)
+    {
+        await client.DeleteMessageAsync(chatId, messageId);
     }
 
     private async Task UserCreateAsync(Message message)
