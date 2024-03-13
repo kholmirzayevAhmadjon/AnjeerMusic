@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AnjeerMusic.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Added6 : Migration
+    public partial class AddedDomain : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -54,10 +54,9 @@ namespace AnjeerMusic.Data.Migrations
                 name: "userMusicals",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     MusicId = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -65,7 +64,7 @@ namespace AnjeerMusic.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_userMusicals", x => x.Id);
+                    table.PrimaryKey("PK_userMusicals", x => new { x.UserId, x.MusicId });
                     table.ForeignKey(
                         name: "FK_userMusicals_musicals_MusicId",
                         column: x => x.MusicId,
@@ -84,11 +83,6 @@ namespace AnjeerMusic.Data.Migrations
                 name: "IX_userMusicals_MusicId",
                 table: "userMusicals",
                 column: "MusicId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_userMusicals_UserId",
-                table: "userMusicals",
-                column: "UserId");
         }
 
         /// <inheritdoc />
